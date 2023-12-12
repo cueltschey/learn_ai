@@ -1,17 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from nnfs.datasets import spiral_data
+import nnfs
 
-np.random.seed(0)
+nnfs.init()
 
-def create_data(points, classes):
-    X = np.zeros((points*classes, 2))
-    Y = np.zeros((points*classes, 2))
-    for class_number in range(classes):
-        ix = range(points*class_number, points*(class_number+1))
-        r = np.linspace(0.0, 1, points)
-        t = np,linspace(class_number * 4, (class_number+1) * 4, points) + np.random.randn(points) * 0.2
-        X[ix] = np.c_[r*]
 
+X, y = spiral_data(100, 3)
 
 
 class Layer_Dense:
@@ -25,10 +20,12 @@ class Activation_ReLU:
     def forward(self, inputs):
         self.output = np.maximum(0, inputs)
 
+layer = Layer_Dense(2, 5)
+activation = Activation_ReLU()
 
-layer1 = Layer_Dense(4, 5)
-layer2= Layer_Dense(5, 2)
+layer.forward(X)
 
-layer1.forward(X)
-layer2.forward(layer1.output)
-print(layer2.output)
+print(layer.output)
+activation.forward(layer.output)
+print(activation.output)
+
